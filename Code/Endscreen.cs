@@ -235,6 +235,7 @@ namespace AdvancedFeatures
                 Container.SetActive(true);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(Container.GetComponent<RectTransform>());
                 HUDManager.Instance.StartCoroutine(AnimateMenu());
+                HUDManager.Instance.StartCoroutine(ForceCloseAfterTime(10f));
                 if (Plugin.EnableAdvancedLogging.Value)
                     Plugin.Log.LogInfo("End screen animation coroutine started");
                 Plugin.Log.LogInfo("Performance report screen displayed");
@@ -244,6 +245,24 @@ namespace AdvancedFeatures
                 // report any unexpected issue while showing the end screen
                 Plugin.Log.LogError("Error occurred while opening end screen!");
                 Plugin.Log.LogError(e);
+            }
+        }
+
+        private static IEnumerator ForceCloseAfterTime(float seconds)
+        {
+            if (Plugin.EnableAdvancedLogging.Value)
+                Plugin.Log.LogInfo($"Force close timer started ({seconds} seconds)");
+
+            yield return new WaitForSeconds(seconds);
+
+            if (Container != null && Container.activeSelf)
+            {
+                Plugin.Log.LogInfo("Force closing performance report after timeout");
+
+                Container.SetActive(false);
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
 
