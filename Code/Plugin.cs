@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AdvancedFeatures
 {
-    [BepInPlugin("com.example.Advancedfeatures", "Advanced Features", "1.1.0")]
+    [BepInPlugin("com.example.Advancedfeatures", "Advanced Features", "1.2.0")]
     public class Plugin : BaseUnityPlugin
     {
 
@@ -21,6 +21,7 @@ namespace AdvancedFeatures
         public static ConfigEntry<bool> ShowAvatars;
         public static ConfigEntry<bool> EnableAdvancedLogging;
         public static ConfigEntry<bool> EnablePerformanceReportCameraScroll;
+        public static ConfigEntry<float> ForceQuit;
         internal static ManualLogSource Log;
         private Harmony _harmony;
         private AssetBundle _assetBundle;
@@ -78,6 +79,12 @@ namespace AdvancedFeatures
                  "EnableCameraScroll",
                  false,
                  "If true, hides cursor and enables scroll wheel for all lists during performance report"
+             );
+            ForceQuit = Config.Bind(
+                 "Performance Report UI",
+                 "ForceQuit",
+                 -1f,
+                 "Set to -1 to disable, any value above will be a timer for how long the game should wait before quitting. Useful if performance report gets stuck for you."
              );
             if (EnableAdvancedLogging.Value)
                 Log.LogInfo("Advanced logging enabled");

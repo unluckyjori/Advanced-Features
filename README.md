@@ -4,9 +4,11 @@
 
 # Features
 
-- UI fix for the Performance Report when using a lobby expansion mod and having more than 4 players
+- New Performance Report UI when using a lobby expansion mod and having more than 4 players
 
-- Death spectating UI for having the screen less messy
+- New Death spectating UI for having the screen less messy
+
+- Fully client-side, so only you need to install it!
 
 # Performance Report UI
 
@@ -46,6 +48,10 @@ For details, see https://creativecommons.org/publicdomain/zero/1.0/
 
 **Potatoepet**
 
-
 - Making the original features
+
+**Bertogim**
+
+- Code contributions
+
 

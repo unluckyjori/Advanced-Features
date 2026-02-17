@@ -235,7 +235,10 @@ namespace AdvancedFeatures
                 Container.SetActive(true);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(Container.GetComponent<RectTransform>());
                 HUDManager.Instance.StartCoroutine(AnimateMenu());
-                HUDManager.Instance.StartCoroutine(ForceCloseAfterTime(10f));
+                if (Plugin.ForceQuit.Value > 0f)
+                {
+                    HUDManager.Instance.StartCoroutine(ForceCloseAfterTime(Plugin.ForceQuit.Value));
+                }
                 if (Plugin.EnableAdvancedLogging.Value)
                     Plugin.Log.LogInfo("End screen animation coroutine started");
                 Plugin.Log.LogInfo("Performance report screen displayed");
