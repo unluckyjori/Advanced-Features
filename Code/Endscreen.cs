@@ -141,58 +141,26 @@ namespace AdvancedFeatures
                     if (ind > -1)
                         notes = notes.Substring(0, ind);
                     notes = notes.Trim();
-                    string deathReason;
+                    string deathReason = "";
                     try
                     {
-                        if (Chainloader.PluginInfos.TryGetValue("com.elitemastereric.coroner", out var pluginInfo))
-                        {
-                            try
+                        deathReason = player.causeOfDeath.ToString();
+
+                        if (Chainloader.PluginInfos.ContainsKey("com.elitemastereric.coroner"))
+                        {   
+                            if (CoronerPatch.DeathData != null && i >= 0 && i < CoronerPatch.DeathData.Length && CoronerPatch.DeathData[i] != null)
                             {
-                                var apiType = pluginInfo.Instance.GetType().Assembly.GetType("Coroner.AdvancedDeathTracker");
-                                if (apiType == null) throw new Exception("Coroner.AdvancedDeathTracker not found");
-
-                                var getMethod = AccessTools.Method(
-                                    apiType,
-                                    "GetCauseOfDeath",
-                                    new[] { typeof(PlayerControllerB), typeof(bool) }
-                                );
-                                if (getMethod == null)
-                                    throw new Exception("GetCauseOfDeath(PlayerControllerB, bool) not found");
-
-                                var nullableCause = getMethod.Invoke(null, new object[] { player, true });
-
-                                var stringifyMethod = AccessTools.Method(
-                                    apiType,
-                                    "StringifyCauseOfDeath",
-                                    new[] { getMethod.ReturnType }
-                                );
-                                if (stringifyMethod == null)
-                                    throw new Exception($"StringifyCauseOfDeath({getMethod.ReturnType.Name}) not found");
-
-                                deathReason = (string)stringifyMethod.Invoke(null, new object[] { nullableCause });
-
-                                // report detailed cause of death when available
-                                if (Plugin.EnableAdvancedLogging.Value)
-                                    Plugin.Log.LogInfo($"[Coroner] {username} died of: {deathReason}");
-                            }
-                            catch (Exception e)
-                            {
-                                // reflection failures are logged so we know what went wrong
-                                Plugin.Log.LogError("Coroner reflection failed: " + e);
-                                deathReason = player.causeOfDeath.ToString();
+                                deathReason = CoronerPatch.DeathData[i].StringifiedDeath ?? deathReason;
                             }
                         }
-                        else
+                        else if (Plugin.EnableAdvancedLogging.Value)
                         {
-                            deathReason = player.causeOfDeath.ToString();
-                            if (Plugin.EnableAdvancedLogging.Value)
-                                Plugin.Log.LogInfo($"[Vanilla] {username} died of: {deathReason}");
+                            Plugin.Log.LogInfo($"[Vanilla] {username} died of: {deathReason}");
                         }
                     }
                     catch (Exception e)
                     {
-                        // if the coroner API throws, log the issue
-                        Plugin.Log.LogError("Coroner test failed: " + e);
+                        Plugin.Log.LogError("Coroner death lookup failed: " + e);
                         deathReason = player.causeOfDeath.ToString();
                     }
 
@@ -294,7 +262,7 @@ namespace AdvancedFeatures
                 TotalText.gameObject.SetActive(false);
                 CollectedLine.gameObject.SetActive(false);
                 CollectedLabel.gameObject.SetActive(false);
-                ScrapLostText.text = "Lost 0% scrap";
+                ScrapLostText.text = "Lost 100% scrap";
                 ScrapLost.gameObject.SetActive(true);
             }
 

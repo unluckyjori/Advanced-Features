@@ -271,10 +271,14 @@ namespace AdvancedFeatures
                     txt.fontSize = 14;
                     txt.alignment = TextAnchor.MiddleCenter;
                     txt.color = new Color32(0xFF, 0x4B, 0x36, 0xFF);
+                    
+                    txt.resizeTextForBestFit = true;
+                    txt.resizeTextMinSize = 8;
+                    txt.resizeTextMaxSize = 14;
 
                     var outline = nameObject.AddComponent<Outline>();
-                    outline.effectColor = new Color32(0, 0, 0, 0xAA);
-                    outline.effectDistance = new Vector2(1, -1);
+                    outline.effectColor = new Color32(0, 0, 0, 255);
+                    outline.effectDistance = new Vector2(0.7f, -0.7f);
 
                     RectTransform rt = nameObject.GetComponent<RectTransform>();
                     rt.anchorMin = new Vector2(0f, 1f);
