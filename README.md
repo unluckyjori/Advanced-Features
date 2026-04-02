@@ -26,10 +26,6 @@
 ## New
 ![NewSpectateDeathUI](https://i.imgur.com/Afl3s4Z.png)
 
-# Planned
-
-- Remove the not needed assets in the asset bundle
-
 # Disclaimer
 
 This code is derived from the mod "Advanced Company," which was released under the Creative Commons CC0 1.0 Universal Public Domain Dedication.
@@ -54,4 +50,12 @@ For details, see https://creativecommons.org/publicdomain/zero/1.0/
 
 - Code contributions
 
+**Moroxide**
 
+- Helped reduce size of asset bundle
+- Helped find a solution for outline on death screen
+
+**mr. hat**
+
+- Helped reduce size of asset bundle
+- Helped find a solution for outline on death screen
